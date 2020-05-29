@@ -25,11 +25,12 @@ const cargarDatos = (path) => {
 };
 /* Carga los valores de suscripciones en la variable "datosPorAnio":object */
 const vectorAnio = async(anio) => {
-    let anios = Object.values(informacion[3]);
+    let anios = Object.values(informacion[3]); //aqui obtengo los datos que necesito.
     anio = anios.indexOf(anio);
     for (let index = 4; index < informacion.length; index++) {
-        datosPorAnio.push([parseInt(informacion[index][anio]), informacion[index][0], informacion[index][1]]);
+        datosPorAnio.push([(informacion[index][anio]), informacion[index][0], informacion[index][1], informacion[index][2]]);
     }
+
     return true;
 };
 /* Limpieza de paises no registrados*/
@@ -66,15 +67,18 @@ const comprobarAnio = (anio) => {
                 return;
             }
         });
-        reject(`El año: "${anio}"0qq no fue encontrado`);
+        reject(`El año: "${anio}" no fue encontrado`);
     });
 };
 
 
-/* Valor de suscripcion del pais y anio especificado */
-const _mediaPais = (codPais) => {
+/* Dato de personas que usan internet del pais y anio especificado */
+const datoPais = (codPais) => {
     dato = [];
     datosPorAnio.forEach((element) => {
+        if (element[0] == '') {
+            element[0] = 'No existen valores registrados'
+        }
         if (element[2] == codPais) {
             dato = element;
             return;
@@ -92,7 +96,7 @@ const obtenerData = async(codPais, anio, path) => {
     limpiarPaises();
     await comprobarAnio(anio);
     await comprobarPais(codPais);
-    let mediaPais = _mediaPais(codPais);
+    let mediaPais = datoPais(codPais);
     return { mediaPais };
 };
 module.exports = {
