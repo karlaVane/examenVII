@@ -1,13 +1,13 @@
 const fs = require("fs");
 const neatCsv = require("neat-csv");
-const paisesValidos = require("./paises-validos.js").paisesValidos;
+const paisesValidos = require("./paises-validos").paisesValidos;
 let informacion = [];
 let datosPorAnio = [];
 
 /* Valida que el número sea de typo number */
 const validarNumero = (numero) => {
     if (!Number(numero)) {
-        throw Error(`${numero}: No es un numero ideal para el año`);
+        throw Error(`${numero}: No es un numero`);
     }
 };
 
@@ -23,8 +23,15 @@ const cargarDatos = (path) => {
         });
     });
 };
-
-
+/* Carga los valores de suscripciones en la variable "datosPorAnio":object */
+const vectorAnio = async(anio) => {
+    let anios = Object.values(informacion[3]);
+    anio = anios.indexOf(anio);
+    for (let index = 4; index < informacion.length; index++) {
+        datosPorAnio.push([parseInt(informacion[index][anio]), informacion[index][0], informacion[index][1]]);
+    }
+    return true;
+};
 /* Limpieza de paises no registrados*/
 const limpiarPaises = () => {
     aux = [];
@@ -63,6 +70,7 @@ const comprobarAnio = (anio) => {
     });
 };
 
+
 /* Valor de suscripcion del pais y anio especificado */
 const _mediaPais = (codPais) => {
     dato = [];
@@ -72,6 +80,7 @@ const _mediaPais = (codPais) => {
             return;
         }
     });
+
     return dato;
 };
 
@@ -79,13 +88,13 @@ const _mediaPais = (codPais) => {
 const obtenerData = async(codPais, anio, path) => {
     await cargarDatos(path);
     validarNumero(anio);
+    vectorAnio(anio);
     limpiarPaises();
     await comprobarAnio(anio);
     await comprobarPais(codPais);
     let mediaPais = _mediaPais(codPais);
     return { mediaPais };
 };
-
 module.exports = {
     obtenerData,
 };
