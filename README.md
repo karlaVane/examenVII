@@ -1,4 +1,4 @@
-## Plataformas Web P56 - Proyecto Primer Parcial 
+## Plataformas Web P56 - Examen Primer Parcial 
 
 Aplicación en NodeJS que permite leer los datos de porcentajes de personas que usan Internet dependiendo
 del año y país que desee el usuario. Por defecto, se consultará del año 1960 y con código de Ecuador "ECU"
