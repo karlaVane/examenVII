@@ -1,0 +1,17 @@
+{
+    "name": "examen",
+    "version": "1.0.0",
+    "description": "Examen primer bimestre Plataformas web",
+    "main": "index.js",
+    "dependencies": {
+        "colors": "^1.4.0",
+        "neat-csv": "^5.2.0",
+        "yargs": "^15.3.1"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Karla Moyón",
+    "license": "ISC"
+}
